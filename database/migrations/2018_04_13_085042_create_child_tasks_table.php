@@ -15,7 +15,8 @@ class CreateChildTasksTable extends Migration
     {
         Schema::create('child_tasks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+	        $table->string('title');
+	        $table->text('content');
             $table->date('start_date');
             $table->date('end_date');
             $table->unsignedInteger('task_id'); //親タスク
