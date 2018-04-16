@@ -27,27 +27,52 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+	/**
+	 * 作成した親タスクの取得
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
     public function tasks()
     {
     	return $this->hasMany(Task::class, 'author_id');
     }
 
+	/**
+	 * 作成した子タスクの取得
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
     public function child_tasks()
     {
     	return $this->hasMany(ChildTask::class, 'author_id');
     }
 
+	/**
+	 * 全てのアサインタスクの取得
+	 *
+	 * @return mixed
+	 */
     public function all_tasks()
     {
     	$tasks = $this->tasks();
     	return $tasks->merge($this->child_tasks());
     }
 
+	/**
+	 * アサインされている親タスクの取得
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
     public function assign_tasks()
     {
     	return $this->hasMany(Task::class, 'assign_user_id');
     }
 
+	/**
+	 * アサインされている子タスクの取得
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
     public function assign_child_tasks()
     {
     	return $this->hasMany(Task::class, 'assign_user_id');
